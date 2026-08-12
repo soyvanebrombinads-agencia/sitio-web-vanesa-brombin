@@ -65,7 +65,9 @@
   .brandmark{
     font-family:'Baloo 2', sans-serif; font-weight:800; font-size:16px;
     color:var(--ink); letter-spacing:-0.01em;
+    display:flex; align-items:center; gap:10px;
   }
+  .brandmark img{width:34px; height:34px; object-fit:contain; display:block;}
   .pillnav{display:flex; gap:8px; flex-wrap:wrap;}
   .pillnav a{
     font-family:'Poppins', sans-serif;
@@ -190,7 +192,8 @@
   .claridad-cta p{max-width:560px; font-size:14.5px; color:var(--ink); font-family:'Inter',sans-serif;}
 
   .team{display:flex; gap:30px; align-items:center; flex-wrap:wrap;}
-  .avatar{width:96px; height:96px; border-radius:50%; background:var(--magenta); display:flex; align-items:center; justify-content:center; font-family:'Baloo 2',sans-serif; font-weight:700; color:#fff; font-size:26px; flex-shrink:0; box-shadow:0 14px 26px -12px rgba(215,5,130,.5);}
+  .avatar{width:96px; height:96px; border-radius:50%; background:var(--magenta); display:flex; align-items:center; justify-content:center; font-family:'Baloo 2',sans-serif; font-weight:700; color:#fff; font-size:26px; flex-shrink:0; box-shadow:0 14px 26px -12px rgba(215,5,130,.5); overflow:hidden;}
+  .avatar img{width:100%; height:100%; object-fit:cover;}
   .team p{color:var(--ink-soft); font-size:14.5px; max-width:560px; font-family:'Inter',sans-serif;}
 
   .badgerow{display:flex; gap:12px; flex-wrap:wrap;}
@@ -298,7 +301,7 @@
 <body>
 
 <nav class="topnav">
-  <div class="brandmark">VB · PUBLICIDAD DIGITAL — mockup</div>
+  <div class="brandmark"><img src="assets/img/logo-verde.png" alt="Vanesa Brombin — Publicidad Digital">VB · PUBLICIDAD DIGITAL — mockup</div>
   <div class="pillnav">
     <a href="#p-home">Home</a>
     <a href="#p-ecommerce">Ecommerce</a>
@@ -368,7 +371,7 @@
       <h2 style="font-size:22px;">Trayectoria</h2>
     </div>
     <div class="team">
-      <div class="avatar">VB</div>
+      <div class="avatar"><img src="assets/img/vanesa-brombin.jpg" alt="Vanesa Brombin"></div>
       <p><b>Soy Vanesa Brombin.</b> Media Buyer, Formadora y Consultora en Estrategia, Publicidad Digital y Automatizaciones, con más de 15 años en marketing y 5 años enfocada en pauta digital.<br><br>No trabajo sola. Julián, Cami y Abi son parte del mismo equipo que se mete en cada cuenta — no es "una agencia que configura campañas", es un equipo que entiende tu negocio antes de tocar un botón.</p>
     </div>
   </section>
