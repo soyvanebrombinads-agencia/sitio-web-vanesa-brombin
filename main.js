@@ -132,6 +132,89 @@
     });
   }
 
+  /* ---------- Team split carousel ---------- */
+  function initTeamCarousel() {
+    $$("[data-team-slider]").forEach(function (slider) {
+      var scope = slider.parentElement;
+      var slides = $$("[data-team-slide]", slider);
+      var dots = $$("[data-team-dots] button", scope);
+      var thumbs = $$("[data-team-thumbs] button", scope);
+      if (!slides.length) return;
+      var idx = 0;
+      var timer = null;
+
+      function show(i) {
+        idx = (i + slides.length) % slides.length;
+        slides.forEach(function (s, n) { s.classList.toggle("is-active", n === idx); });
+        dots.forEach(function (d, n) { d.classList.toggle("is-active", n === idx); });
+        thumbs.forEach(function (t, n) { t.classList.toggle("is-active", n === idx); });
+      }
+      function restart() {
+        if (timer) clearInterval(timer);
+        if (!reduced) timer = setInterval(function () { show(idx + 1); }, 5000);
+      }
+
+      var prevBtn = $("[data-team-prev]", slider);
+      var nextBtn = $("[data-team-next]", slider);
+      if (prevBtn) prevBtn.addEventListener("click", function () { show(idx - 1); restart(); });
+      if (nextBtn) nextBtn.addEventListener("click", function () { show(idx + 1); restart(); });
+      dots.forEach(function (d, n) { d.addEventListener("click", function () { show(n); restart(); }); });
+      thumbs.forEach(function (t, n) { t.addEventListener("click", function () { show(n); restart(); }); });
+
+      show(0);
+      restart();
+    });
+  }
+
+  /* ---------- Proof carousel: cycle which testimonial is featured ---------- */
+  function initProofCarousel() {
+    $$("[data-proof-carousel]").forEach(function (root) {
+      var cards = $$("[data-proof-card]", root);
+      var dots = $$("[data-proof-dots] button", root);
+      if (!cards.length) return;
+      var idx = cards.findIndex(function (c) { return c.classList.contains("is-featured"); });
+      if (idx < 0) idx = 0;
+
+      function show(i) {
+        idx = (i + cards.length) % cards.length;
+        cards.forEach(function (card, n) {
+          var featured = n === idx;
+          card.classList.toggle("is-featured", featured);
+          var badge = $(".proof-badge", card);
+          if (badge) badge.textContent = featured ? "Caso destacado" : badge.getAttribute("data-category");
+        });
+        dots.forEach(function (d, n) { d.classList.toggle("is-active", n === idx); });
+      }
+
+      var prevBtn = $("[data-proof-prev]", root);
+      var nextBtn = $("[data-proof-next]", root);
+      if (prevBtn) prevBtn.addEventListener("click", function () { show(idx - 1); });
+      if (nextBtn) nextBtn.addEventListener("click", function () { show(idx + 1); });
+      dots.forEach(function (d, n) { d.addEventListener("click", function () { show(n); }); });
+
+      show(idx);
+    });
+  }
+
+  /* ---------- Click-to-load YouTube embed ---------- */
+  function initVideoEmbeds() {
+    $$("[data-video-embed]").forEach(function (wrap) {
+      var play = $(".video-play", wrap);
+      if (!play) return;
+      play.addEventListener("click", function () {
+        var id = wrap.getAttribute("data-video-id");
+        if (!id) return;
+        var iframe = document.createElement("iframe");
+        iframe.src = "https://www.youtube.com/embed/" + id + "?autoplay=1&rel=0";
+        iframe.title = "YouTube video player";
+        iframe.allow = "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture";
+        iframe.allowFullscreen = true;
+        wrap.appendChild(iframe);
+        wrap.classList.add("is-playing");
+      });
+    });
+  }
+
   /* ---------- Marquee: duplicate content for seamless loop ---------- */
   function initMarquee() {
     $$("[data-marquee]").forEach(function (track) {
@@ -181,6 +264,9 @@
     safe(initReveals, "initReveals");
     safe(initCountUp, "initCountUp");
     safe(initTilt, "initTilt");
+    safe(initTeamCarousel, "initTeamCarousel");
+    safe(initProofCarousel, "initProofCarousel");
+    safe(initVideoEmbeds, "initVideoEmbeds");
     safe(initMarquee, "initMarquee");
     safe(initAnchors, "initAnchors");
     safe(initContactForm, "initContactForm");
