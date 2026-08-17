@@ -30,15 +30,17 @@
 
   /* ---------- Mouse-reactive hero gradient ---------- */
   function initHeroGradient() {
-    var hero = $(".hero");
-    if (!hero) return;
+    var heroes = $$(".hero, .hero-split");
+    if (!heroes.length) return;
     if (!fineHover) return; // touch: keep the static CSS default (--mx/--my initial values)
-    hero.addEventListener("mousemove", function (e) {
-      var r = hero.getBoundingClientRect();
-      var x = ((e.clientX - r.left) / r.width) * 100;
-      var y = ((e.clientY - r.top) / r.height) * 100;
-      hero.style.setProperty("--mx", x + "%");
-      hero.style.setProperty("--my", y + "%");
+    heroes.forEach(function (hero) {
+      hero.addEventListener("mousemove", function (e) {
+        var r = hero.getBoundingClientRect();
+        var x = ((e.clientX - r.left) / r.width) * 100;
+        var y = ((e.clientY - r.top) / r.height) * 100;
+        hero.style.setProperty("--mx", x + "%");
+        hero.style.setProperty("--my", y + "%");
+      });
     });
   }
 
@@ -250,11 +252,37 @@
       e.preventDefault();
       if (!form.reportValidity()) return;
       var note = $("[data-form-note]", form);
-      if (note) {
-        note.textContent = "¡Gracias! Te vamos a escribir a la brevedad.";
-        note.hidden = false;
-      }
-      form.reset();
+      var submitBtn = form.querySelector('button[type="submit"]');
+      if (submitBtn) submitBtn.disabled = true;
+
+      fetch(form.getAttribute("action") || "contact.php", {
+        method: "POST",
+        body: new FormData(form),
+        headers: { Accept: "application/json" },
+      })
+        .then(function (res) { return res.json(); })
+        .then(function (data) {
+          if (!note) return;
+          if (data && data.ok) {
+            note.style.color = "var(--green)";
+            note.textContent = "¡Gracias! Te vamos a escribir a la brevedad.";
+            form.reset();
+          } else {
+            note.style.color = "#c0392b";
+            note.textContent = "No pudimos enviar tu mensaje. Probá de nuevo o escribinos por WhatsApp.";
+          }
+          note.hidden = false;
+        })
+        .catch(function () {
+          if (note) {
+            note.style.color = "#c0392b";
+            note.textContent = "No pudimos enviar tu mensaje. Probá de nuevo o escribinos por WhatsApp.";
+            note.hidden = false;
+          }
+        })
+        .finally(function () {
+          if (submitBtn) submitBtn.disabled = false;
+        });
     });
   }
 

@@ -1,0 +1,12 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "vb-static-review",
+      "runtimeExecutable": "python",
+      "runtimeArgs": ["-c", "import os,http.server,socketserver; p=int(os.environ.get('PORT','9417')); socketserver.TCPServer.allow_reuse_address=True; s=socketserver.TCPServer(('',p),http.server.SimpleHTTPRequestHandler); s.serve_forever()"],
+      "port": 9417,
+      "autoPort": true
+    }
+  ]
+}
