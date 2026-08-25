@@ -7,7 +7,7 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     exit;
 }
 
-$destinatario = 'hola@vanesabrombin.com.ar';
+$destinatario = 'agencia@vanesabrombin.com';
 
 function campo($nombre) {
     return isset($_POST[$nombre]) ? trim($_POST[$nombre]) : '';

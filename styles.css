@@ -32,6 +32,9 @@
   --radius-sm: 14px;
   --container: 1200px;
 
+  --hl-pink:   #dfc8d0;
+  --hl-lila:   #dcace9;
+
   --ease-out:  cubic-bezier(.16,1,.3,1);
   --ease-soft: cubic-bezier(.25,.46,.45,.94);
   --ease-bounce: cubic-bezier(.34,1.56,.64,1);
@@ -331,20 +334,20 @@ html.is-ready .reveal.is-visible{opacity:1; transform:none;}
 }
 .illo-seal svg{width:20px; height:20px; color:var(--green-bright); flex-shrink:0;}
 .illo-seal span{display:block;}
-.illo-seal .hl{color:var(--green-bright);}
+.illo-seal .hl{color:var(--green-bright); background:none;}
 
 /* mobile: simple stacked flow */
 .hero-split-illo .illo-card, .hero-split-illo .illo-seal{margin-top:14px;}
 
 @media (min-width:960px){
   .hero-split-illo{min-height:660px; display:flex; align-items:center; justify-content:center;}
-  .illo-photo-card{position:relative; max-width:300px; margin:0;}
+  .illo-photo-card{position:relative; max-width:350px; margin:0;}
   .hero-split-illo .illo-card, .hero-split-illo .illo-seal{position:absolute; margin-top:0;}
   .illo-dashboard{top:0; right:0; width:260px;}
   .illo-roas{top:186px; right:-24px;}
   .illo-platforms{top:322px; right:-6px;}
-  .illo-quote{top:420px; right:30px;}
-  .illo-seal{top:552px; right:70px;}
+  .illo-quote{top:487px; right:30px;}
+  .illo-seal{top:619px; right:70px;}
 }
 
 /* --- Dark split hero variant (Profesionales) --- */
@@ -386,12 +389,17 @@ html.is-ready .reveal.is-visible{opacity:1; transform:none;}
   position:relative; max-width:520px; margin-inline:auto; border-radius:var(--radius); overflow:hidden;
   border:1px solid rgba(20,179,158,.4);
   box-shadow:0 0 0 1px rgba(20,179,158,.15), 0 40px 80px -30px rgba(0,0,0,.6), 0 0 60px -10px rgba(20,179,158,.25);
+  animation:photofloat 5s ease-in-out infinite;
 }
 .hero-photo-glow img{width:100%; display:block;}
+@media (prefers-reduced-motion: reduce){
+  .hero-photo-glow{animation:none;}
+}
 .hero-dot{position:absolute; width:9px; height:9px; border-radius:50%; background:var(--magenta-bright); box-shadow:0 0 14px 2px rgba(255,79,176,.5);}
 .hero-dot.green{background:var(--green-bright); box-shadow:0 0 14px 2px rgba(20,179,158,.5);}
 @media (min-width:960px){
   .hero-split.dark .hero-split-illo{min-height:0;}
+  .hero-split.dark .hero-split-illo .illo-photo-card{margin-top:180px;}
 }
 
 .trust{
@@ -464,6 +472,7 @@ html.is-ready .reveal.is-visible{opacity:1; transform:none;}
   transform-style:preserve-3d;
 }
 .svc:hover{transform:translateY(-5px); box-shadow:0 26px 46px -26px rgba(10,26,22,.3);}
+.svc.hi:hover{transform:translateY(-5px) scale(1.035); box-shadow:0 26px 46px -26px rgba(10,26,22,.3); z-index:2;}
 .svc.green{border-color:var(--line);}
 .svc.hi{border-color:var(--magenta); border-width:2px; background:var(--surface-magenta);}
 
@@ -631,7 +640,7 @@ html.is-ready .reveal.is-visible{opacity:1; transform:none;}
 .on-magenta-grad .section-head h2{color:#fff;}
 .on-magenta-grad .section-head p{color:rgba(255,255,255,.85);}
 .on-magenta-grad h2 .hl{
-  color:var(--ink); background-image:linear-gradient(rgba(255,255,255,.92), rgba(255,255,255,.92));
+  color:#fff; background:none;
 }
 
 /* =============================================================
@@ -688,7 +697,12 @@ html.is-ready .reveal.is-visible{opacity:1; transform:none;}
   box-shadow:0 20px 40px -24px rgba(10,26,22,.35);
 }
 
-.sitemock{border-radius:14px; overflow:hidden; border:1px solid var(--line); box-shadow:0 20px 40px -24px rgba(10,26,22,.3); background:#fff;}
+.sitemock{
+  display:block; border-radius:14px; overflow:hidden; border:1px solid var(--line);
+  box-shadow:0 20px 40px -24px rgba(10,26,22,.3); background:#fff;
+  transition:transform .3s var(--ease-out), box-shadow .3s var(--ease-out);
+}
+.sitemock:hover{transform:translateY(-4px); box-shadow:0 26px 46px -22px rgba(10,26,22,.4);}
 .sitemock-bar{display:flex; align-items:center; gap:6px; padding:9px 12px; background:var(--paper-2); border-bottom:1px solid var(--line);}
 .sitemock-dot{width:7px; height:7px; border-radius:50%; background:var(--line); flex-shrink:0;}
 .sitemock-url{flex:1; margin-left:6px; font-size:10px; color:var(--ink-soft); background:#fff; border-radius:999px; padding:3px 10px; border:1px solid var(--line); font-family:var(--font-label); white-space:nowrap; overflow:hidden; text-overflow:ellipsis;}
@@ -978,11 +992,20 @@ tr:nth-child(even) td{background:var(--surface-green);}
 
 .team-split-copy h2{font-size:clamp(1.6rem,3vw,2.35rem); line-height:1.3; margin-bottom:22px; max-width:18ch;}
 .hl{
-  position:relative; font-weight:800; color:var(--ink); padding:0 3px;
-  background-image:linear-gradient(rgba(215,5,130,.28), rgba(215,5,130,.28));
-  background-repeat:no-repeat; background-size:100% 40%; background-position:0 92%;
+  position:relative; font-weight:800; font-style:italic; color:var(--ink); padding:0 2px;
+  background-image:linear-gradient(var(--hl-pink), var(--hl-pink));
+  background-size:100% 30%; background-repeat:no-repeat; background-position:0 90%;
+  box-decoration-break:clone; -webkit-box-decoration-break:clone;
 }
+.team-split-copy h2 .hl{background:none; color:var(--magenta); padding:0;}
+.hl.lila{background-image:linear-gradient(var(--hl-lila), var(--hl-lila));}
+.hl.green{background-image:linear-gradient(var(--green-bright), var(--green-bright));}
 .hl-green{color:var(--green); font-weight:800; font-style:normal;}
+.hl-green-outline{
+  color:#fff; font-weight:800; font-style:italic;
+  text-shadow:0 3px 10px rgba(0,0,0,.3);
+}
+.hl-magenta{color:var(--magenta); font-weight:800; font-style:normal;}
 .team-split-copy p{color:var(--ink-soft); font-size:15px; line-height:1.7; margin-bottom:14px;}
 .team-split-copy p b{color:var(--ink); font-weight:700;}
 .team-pillars{margin:22px 0 26px; display:flex; flex-direction:column; gap:11px;}
@@ -1186,11 +1209,6 @@ tr:nth-child(even) td{background:var(--surface-green);}
 /* =============================================================
    26. Profesionales page — underline highlight, audience card, testimonial pairs
    ============================================================= */
-.underline-mark{
-  position:relative; display:inline-block; font-style:italic; color:var(--magenta);
-}
-.underline-mark svg{position:absolute; left:0; bottom:-8px; width:100%; height:10px; color:var(--magenta);}
-
 .audience-card{
   display:grid; grid-template-columns:1fr; gap:24px;
   background:var(--surface-magenta); border-radius:var(--radius); padding:32px; margin-top:24px;
@@ -1309,7 +1327,6 @@ tr:nth-child(even) td{background:var(--surface-green);}
 }
 .claridadclose-pill svg{width:13px; height:13px;}
 .claridadclose h3{font-size:clamp(1.7rem,3vw,2.15rem); font-weight:700; max-width:460px; line-height:1.28; margin-bottom:16px;}
-.claridadclose h3 em{font-style:italic; color:#ffd9ec;}
 .claridadclose-inner p{max-width:420px; font-size:15px; color:rgba(255,255,255,.85); margin-bottom:26px; line-height:1.5;}
 .claridadclose-features{display:flex; flex-wrap:wrap; gap:12px; margin-bottom:28px;}
 .claridadclose-features span{
@@ -1487,3 +1504,24 @@ tr:nth-child(even) td{background:var(--surface-green);}
 @media (max-width:760px){
   .contactopt{border-right:none; border-bottom:1px solid var(--line);}
 }
+
+/* =============================================================
+   30. Standalone checklist (presupuesto landings)
+   ============================================================= */
+.checklist{list-style:none; padding:0; margin:0; display:grid; grid-template-columns:1fr; gap:11px;}
+@media (min-width:720px){.checklist.cols2{grid-template-columns:1fr 1fr; column-gap:24px;}}
+.checklist li{display:flex; align-items:flex-start; gap:10px; font-size:14px; color:var(--ink-soft); line-height:1.5;}
+.checklist li::before{
+  content:"✓"; flex-shrink:0; width:20px; height:20px; border-radius:50%; margin-top:1px;
+  display:flex; align-items:center; justify-content:center; font-size:10px; font-weight:700;
+  background:var(--surface-green); color:var(--green);
+}
+.on-dark .checklist li{color:var(--cream-2);}
+.on-dark .checklist li::before{background:rgba(255,255,255,.1); color:var(--green-bright);}
+
+/* =============================================================
+   31. Pricing note box (presupuesto landings)
+   ============================================================= */
+.pricenote{background:var(--surface-magenta); border-radius:var(--radius); padding:26px 28px; margin-top:22px;}
+.pricenote h4{font-size:16px; margin-bottom:14px; color:var(--ink);}
+.pricenote.green{background:var(--surface-green);}
