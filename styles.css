@@ -220,6 +220,8 @@ html.is-ready .reveal.is-visible{opacity:1; transform:none;}
 }
 .hero-actions{display:flex; gap:14px; justify-content:center; flex-wrap:wrap;}
 
+.hero-logo-big{width:min(280px, 70%); height:auto; object-fit:contain; margin:0 auto 30px; display:block;}
+
 /* =============================================================
    6b. Split hero (light, two-column) — per-service hero, e.g. Ecommerce
    ============================================================= */
@@ -606,6 +608,16 @@ html.is-ready .reveal.is-visible{opacity:1; transform:none;}
 
 .processgrid{display:grid; grid-template-columns:1fr; gap:18px; margin-top:40px;}
 @media (min-width:720px){.processgrid{grid-template-columns:repeat(3,1fr);}}
+
+/* 5-step variant: centers steps 4 and 5 between the columns of the row above */
+@media (min-width:720px){
+  .processgrid.five{grid-template-columns:repeat(6,1fr);}
+  .processgrid.five .pstep:nth-child(1){grid-column:1 / 3;}
+  .processgrid.five .pstep:nth-child(2){grid-column:3 / 5;}
+  .processgrid.five .pstep:nth-child(3){grid-column:5 / 7;}
+  .processgrid.five .pstep:nth-child(4){grid-column:2 / 4;}
+  .processgrid.five .pstep:nth-child(5){grid-column:4 / 6;}
+}
 .pstep{background:var(--bg-card); border:1px solid var(--line-dark); border-radius:var(--radius); padding:26px;}
 .pstep-head{display:flex; align-items:center; gap:12px; margin-bottom:18px;}
 .pstep-num{
@@ -794,6 +806,7 @@ th{background:var(--green); color:#fff; font-family:var(--font-display); font-si
 td{color:var(--ink);}
 tr:last-child td{border-bottom:none;}
 tr:nth-child(even) td{background:var(--surface-green);}
+.on-magenta .tablewrap tr:nth-child(odd) td{background:#fff;}
 
 /* =============================================================
    14. FAQ (native details, CSS only)
