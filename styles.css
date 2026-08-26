@@ -102,6 +102,9 @@ ul{list-style:none; padding:0;}
 }
 .section.on-dark{background:var(--bg); color:var(--cream);}
 .section.on-green{background:var(--surface-green);}
+.section.on-green-deep{background:var(--green);}
+.on-green-deep .section-head h2{color:#fff;}
+.on-green-deep .section-head p{color:rgba(255,255,255,.82);}
 .section.on-magenta{background:var(--surface-magenta);}
 .section-head{max-width:640px; margin-bottom:36px;}
 .section-head h2{font-size:clamp(1.6rem,3.4vw,2.4rem); margin-top:10px;}
@@ -807,6 +810,9 @@ td{color:var(--ink);}
 tr:last-child td{border-bottom:none;}
 tr:nth-child(even) td{background:var(--surface-green);}
 .on-magenta .tablewrap tr:nth-child(odd) td{background:#fff;}
+.on-green-deep .tablewrap tr:nth-child(odd) td{background:#fff;}
+#valores .tablewrap th{background:var(--magenta);}
+#valores .tablewrap tr:nth-child(even) td{background:var(--surface-magenta);}
 
 /* =============================================================
    14. FAQ (native details, CSS only)
